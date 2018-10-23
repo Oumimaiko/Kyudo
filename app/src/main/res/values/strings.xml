@@ -2,4 +2,5 @@
     <string name="app_name">Kyudo</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_dates">DatesActivity</string>
+    <string name="title_activity_input">InputActivity</string>
 </resources>
