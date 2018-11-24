@@ -1,18 +1,21 @@
 package jp.kyudodatabaseuniformresourceidentifier.kyudo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class DaysResultActivity extends FragmentActivity {
+public class DaysResultActivity extends FragmentActivity implements ViewPager.OnPageChangeListener{
     //private Toolbar toolbar;
 
     private ViewPager mPager;
@@ -20,6 +23,10 @@ public class DaysResultActivity extends FragmentActivity {
 
     private Button mButtonNext;
     private Button mButtonBack;
+
+    private TabLayout mTabLayout;
+
+    DaysPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +38,31 @@ public class DaysResultActivity extends FragmentActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(DaysResultActivity.this,InputActivity.class);
+                startActivity(intent);
             }
         });
-        
-        mPager = (ViewPager) findViewById(R.id.viewPager);
-        DaysPagerAdapter adapter = new DaysPagerAdapter(getSupportFragmentManager());
 
-        mPager.setAdapter(adapter);
+
+
+        mTabLayout = findViewById(R.id.tabLayout);
+        mTabLayout.addTab(mTabLayout.newTab().setText("画像"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("統計"));
+
+
+        mPager = (ViewPager) findViewById(R.id.viewPager);
+        mAdapter = new DaysPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
+
+        mPager.addOnPageChangeListener(this);
+
+        //オートマチック方式: これだけで両方syncする
+        mTabLayout.setupWithViewPager(mPager);
+
+
         currentPage = 0;
 
+        /*
         mButtonBack = findViewById(R.id.next);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +78,7 @@ public class DaysResultActivity extends FragmentActivity {
                 onClickVisual();
             }
         });
+        */
     }
 
     public void onClickStatic(){
@@ -69,6 +91,16 @@ public class DaysResultActivity extends FragmentActivity {
         mPager.setCurrentItem(currentPage);
     }
 
+    @Override
+    public void onPageScrolled(int i, float v, int i1) { }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("MainActivity", "onPageSelected() position="+position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) { }
     /*
     protected void setViews() {
         FragmentManager manager = getSupportFragmentManager();
@@ -79,9 +111,39 @@ public class DaysResultActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
     */
-
-
-
-
-
 }
+
+
+
+/*
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:text="統計" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:text="画像" />
+
+    </LinearLayout>
+
+ */

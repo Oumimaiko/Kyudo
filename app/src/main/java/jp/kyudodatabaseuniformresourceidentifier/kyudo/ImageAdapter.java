@@ -1,57 +1,98 @@
 package jp.kyudodatabaseuniformresourceidentifier.kyudo;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.annotations.PrimaryKey;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private LayoutInflater mLayoutInflater;
+    private List<Target> mTargetList;
 
+    private Realm mRealm = Realm.getDefaultInstance();
+
+    //コンストラクター コンテクストを作ってレイアウトインフレーターに渡す
     public ImageAdapter(Context c){
         mContext = c;
+        mLayoutInflater = LayoutInflater.from(c);
     }
 
+    //フラグメントからターゲット.classのリストを受け取る
+    public void setTargetList(List<Target> targetList){
+        mTargetList = targetList;
+    }
+
+    //レイアウトUI保持用のクラス
+    /*
+    private static class ViewHolder{
+        public ImageView imageView;
+        public TextView HayaText;
+        public TextView OtoyaText;
+    }
+    */
+
     public int getCount(){
-        return mThumbIds.length;
+        return mTargetList.size();
     }
 
     public Object getItem(int position){
-        return null;
+        return mTargetList.get(position);
     }
 
     public long getItemId(int position){
-        return 0;
+        return mTargetList.get(position).getId();
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        ImageView imageView;
+
+        //ViewHolder viewHolder;
         if (convertView == null){
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(200,200));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(4,4,4,4);
-        } else {
-            imageView = (ImageView) convertView;
+            convertView = mLayoutInflater.inflate(R.layout.grid_item_target,null);
+        }
+        TextView hayaText = (TextView) convertView.findViewById(R.id.hayaDot);
+        TextView otoyaText = (TextView) convertView.findViewById(R.id.otoyaDot);
+
+        if (hayaText != null){
+            hayaText.setTranslationX(mTargetList.get(position).getHayaPositionX());
+            hayaText.setTranslationY(mTargetList.get(position).getHayaPositionY());
         }
 
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
+        if (otoyaText != null) {
+            otoyaText.setTranslationX(mTargetList.get(position).getOtoyaPositionX());
+            otoyaText.setTranslationY(mTargetList.get(position).getOtoyaPositionY());
+        }
+
+        return convertView;
     }
 
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-    };
 }
 
+
+/*
+        //ViewHolder viewHolder;
+        if (convertView == null){
+            convertView = mLayoutInflater.inflate(R.layout.grid_item_target,null);
+            viewHolder = new ViewHolder();
+            viewHolder.HayaText = (TextView)convertView.findViewById(R.id.hayaDot);
+            viewHolder.OtoyaText = (TextView)convertView.findViewById(R.id.otoyaDot);
+
+            viewHolder.HayaText.setTranslationX(mTargetList.get(position).getHayaPositionX());
+            viewHolder.HayaText.setTranslationY(mTargetList.get(position).getHayaPositionY());
+
+            viewHolder.OtoyaText.setTranslationX(mTargetList.get(position).getOtoyaPositionX());
+            viewHolder.OtoyaText.setTranslationY(mTargetList.get(position).getOtoyaPositionY());
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder)convertView.getTag();
+        }
+ */

@@ -34,6 +34,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jp.kyudodatabaseuniformresourceidentifier.kyudo.DaysActivity"/>
         </activity>
+        <activity
+            android:name=".InputActivity"
+            android:label="InputActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

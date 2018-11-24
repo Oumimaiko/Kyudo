@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/mato"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:src="@drawable/mato" />
+
+        <TextView
+            android:id="@+id/hayaDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/otoyaDot"
+            android:text="・"
+            android:textColor="#223DC7"
+            android:textSize="75dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/otoyaDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="・"
+            android:textColor="#F50606"
+            android:textSize="75dp"
+            android:visibility="invisible" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/mato"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Haya"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="早矢" />
+
+            <Button
+                android:id="@+id/Otoya"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="乙矢" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>
